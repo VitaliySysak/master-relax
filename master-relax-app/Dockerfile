@@ -14,7 +14,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY . .
-COPY --chown=node:node .env.production .env.public
+COPY --chown=node:node .env.public .env.production
 RUN echo "export default [{ ignores: ['**/*'] }];" > eslint.config.mjs
 RUN npm run build
 
