@@ -13,7 +13,7 @@ export const Location: React.FC<Props> = ({ className }) => {
         title="google"
         className="w-full h-[500px] 2xl:h-[600px] rounded-2xl"
         loading="lazy"
-        src={`https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_MAPS_API_KEY}&q=${lat},${lng}`}
+        src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${lat},${lng}`}
       ></iframe>
       <div className="flex flex-col px-12 justify-evenly gap-4 mb-16 text-center">
         <div>
