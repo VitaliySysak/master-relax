@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   other: {
     'google-site-verification': 'rL2ohyaPB9EAdzkm6VZIEu1O93R5NuaNU3GQI1jqCcw',
+    'x-git-commit': process.env.NEXT_PUBLIC_GIT_HASH || 'dev',
   },
 };
 
