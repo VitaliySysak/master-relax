@@ -1,0 +1,10 @@
+{
+  "name": "mapiqo-devops",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "scripts": {
+    "all": "docker compose up -d"
+  }
+}

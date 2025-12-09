@@ -1,0 +1,38 @@
+services:
+  master-relax:
+    container_name: master-relax-app-production
+    env_file:
+      - ./master-relax-app/.env.production
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:80/health').then(r => {if(!r.ok) process.exit(1)}).catch(() => process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    image: bering152/master-relax-app-production:latest
+    restart: on-failure
+    ports:
+      - 3010:80
+  db:
+    container_name: master-relax-database-prod
+    env_file:
+      - ./master-relax-database/.env.production
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    image: postgres:15
+    ports:
+      - 5432:5432
+
+volumes:
+  db-data:
+    name: master-relax-db-data
