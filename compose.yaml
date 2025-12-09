@@ -1,6 +1,6 @@
 services:
   master-relax:
-    container_name: master-relax-app-production
+    container_name: master-relax-app
     env_file:
       - ./master-relax-app/.env.production
     healthcheck:
@@ -9,7 +9,7 @@ services:
           "CMD",
           "node",
           "-e",
-          "fetch('http://localhost:80/health').then(r => {if(!r.ok) process.exit(1)}).catch(() => process.exit(1))",
+          "fetch('http://localhost:80/api/health').then(r => {if(!r.ok) process.exit(1)}).catch(() => process.exit(1))",
         ]
       interval: 30s
       timeout: 10s
@@ -19,7 +19,7 @@ services:
     ports:
       - 3010:80
   db:
-    container_name: master-relax-database-prod
+    container_name: master-relax-database
     env_file:
       - ./master-relax-database/.env.production
     volumes:
