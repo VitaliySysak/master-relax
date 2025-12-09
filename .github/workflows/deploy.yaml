@@ -18,9 +18,9 @@ jobs:
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Generate .env.production
+      - name: Generate .env.public
         run: |
-          cat <<EOF > .env.production
+          cat <<EOF > .env.public
           NEXT_PUBLIC_GIT_HASH: ${{ github.sha }}
           NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
           NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
