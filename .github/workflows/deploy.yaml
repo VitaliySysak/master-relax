@@ -18,14 +18,6 @@ jobs:
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Generate .env.public
-        run: |
-          cat <<EOF > ./master-relax-app/.env.public
-          NEXT_PUBLIC_GIT_HASH: ${{ github.sha }}
-          NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
-          NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
-          EOF
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -33,7 +25,10 @@ jobs:
           push: true
           tags: bering152/master-relax-app-production:latest
           build-args: |
-            ENV_FILE=.env.public
+            NEXT_PUBLIC_GIT_HASH=${{ github.sha }}
+            NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
+            NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
 
   deploy:
     needs: build-and-push

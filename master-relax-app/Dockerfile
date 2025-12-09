@@ -14,7 +14,12 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY . .
-COPY --chown=node:node .env.public .env.production
+ARG NEXT_PUBLIC_GIT_HASH
+ARG NEXT_PUBLIC_GOOGLE_ANALYTICS_ID
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_GIT_HASH=$NEXT_PUBLIC_GIT_HASH
+ENV NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=$NEXT_PUBLIC_GOOGLE_ANALYTICS_ID
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN echo "export default [{ ignores: ['**/*'] }];" > eslint.config.mjs
 RUN npm run build
 
