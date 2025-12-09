@@ -33,7 +33,7 @@ jobs:
           push: true
           tags: bering152/master-relax-app-production:latest
           build-args: |
-            ENV_FILE=.env.production
+            ENV_FILE=.env.public
 
   deploy:
     needs: build-and-push
