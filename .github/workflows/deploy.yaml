@@ -18,6 +18,9 @@ jobs:
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
+      - name: Github hash
+        run: echo "GITHUB_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -25,7 +28,7 @@ jobs:
           push: true
           tags: bering152/master-relax-app-production:latest
           build-args: |
-            NEXT_PUBLIC_GIT_HASH=${{ github.sha }}
+            NEXT_PUBLIC_GIT_HASH=${{ env.GITHUB_SHA }}
             NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
             NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}

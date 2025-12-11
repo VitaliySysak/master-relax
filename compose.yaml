@@ -9,7 +9,7 @@ services:
           "CMD",
           "node",
           "-e",
-          "fetch('http://localhost:80/api/health').then(r => {if(!r.ok) process.exit(1)}).catch(() => process.exit(1))",
+          "fetch('http://localhost:8080/api/health').then(r => {if(!r.ok) process.exit(1)}).catch(() => process.exit(1))",
         ]
       interval: 30s
       timeout: 10s
@@ -17,7 +17,7 @@ services:
     image: bering152/master-relax-app-production:latest
     restart: on-failure
     ports:
-      - 3010:80
+      - 127.0.0.1:3010:8080
   db:
     container_name: master-relax-database
     env_file:
@@ -31,7 +31,7 @@ services:
       retries: 5
     image: postgres:15
     ports:
-      - 5432:5432
+      - 127.0.0.1:5432:5432
 
 volumes:
   db-data:
