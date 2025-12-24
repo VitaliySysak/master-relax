@@ -22,7 +22,7 @@ export const BookMassageCard: React.FC<Props> = ({ className, massage, name, isS
         trigger(name);
       }}
       className={cn(
-        'flex flex-col justify-evenly cursor-pointer h-[120px] md:h-[138px] border-3 border-[#4a4a55] rounded-2xl p-4 md:py-6 transition-all duration-300 hover:border-[#84363a] hover:shadow-lg',
+        'flex flex-col justify-evenly cursor-pointer h-[120px] md:h-[160px] border-3 border-[#4a4a55] rounded-2xl p-4 md:py-6 transition-all duration-300 hover:border-[#84363a] hover:shadow-lg',
         isSelected && 'bg-[#34262e] border-[#d34545] hover:border-[#d34545]',
         className,
       )}

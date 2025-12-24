@@ -54,7 +54,7 @@ export const ContactUs: React.FC<Props> = ({ className }) => {
       <div className="flex flex-col-reverse lg:flex-row items-center lg:items-start justify-between gap-16 2xl:gap-32 pt-24">
         <div
           id="contact-form"
-          className=" scroll-mt-24 bg-primary w-full lg:flex-[3] rounded-2xl px-4 py-6 md:p-10 2xl:p-12 shadow-2xl"
+          className="scroll-mt-24 bg-primary w-full lg:flex-[3] rounded-2xl px-6 py-6 md:p-10 2xl:p-12 shadow-2xl"
         >
           <FormProvider {...form}>
             <form
@@ -81,9 +81,9 @@ export const ContactUs: React.FC<Props> = ({ className }) => {
           </FormProvider>
         </div>
         <aside className="lg:flex-[2] flex flex-col items-center gap-8">
-          <div className="md:px-4">
+          <div className="w-full md:px-4">
             <img
-              className="rounded-2xl h-[460px] lg:w-[320px] xl:w-[360px] 2xl:w-[400px] lg:h-[380px] 2xl:h-[460px]  shadow-2xl"
+              className="rounded-2xl w-full lg:w-[320px] xl:w-[360px] 2xl:w-[400px] h-full lg:h-[380px] 2xl:h-[460px] shadow-2xl"
               src={contactUrl}
               alt="массажист"
             />

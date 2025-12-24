@@ -39,13 +39,9 @@ export const Drawer: React.FC<Props> = ({ className, onClose, isOpen }) => {
         </div>
 
         <ul className="flex flex-col h-full items-center font-bold text-[28px] justify-evenly p-4 pt-0">
-          {navBarLinks.map(({ title, href }, index) => (
-            <li key={index} className="hover:underline underline-offset-4 decoration-2 decoration-blue-500">
-              {href === '/#bookMassage' ? (
-                <Link href={{ pathname: '/', hash: 'bookMassage' }}>{title}</Link>
-              ) : (
-                <Link href={href}>{title}</Link>
-              )}
+          {navBarLinks.map(({ title, href }, i) => (
+            <li key={i} className="w-full text-center hover:underline underline-offset-4 decoration-2 decoration-blue-500">
+              {href === '/#bookMassage' ? <a href="/#bookMassage" className='w-full'>{title}</a> : <Link href={href}>{title}</Link>}
             </li>
           ))}
         </ul>

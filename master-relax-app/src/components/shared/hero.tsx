@@ -20,7 +20,7 @@ export const Hero: React.FC<Props> = ({ className }) => {
           </h1>
           <div className="relative md:hidden mt-4">
             <figure className="absolute rounded-full -left-2 -top-12 border-4 border-[var(--figures)] h-[100px] w-[100px]" />
-            <img className="w-full rounded-[40px] px-2 " src={heroUrl} alt="головна" />
+            <img className="w-full rounded-[40px]" src={heroUrl} alt="головна" />
           </div>
           <p className="text-[18px] md:text-[16px] lg:text-[20px] 2xl:text-[22px] md:max-w-[360px] lg:max-w-[500px] 2xl:lg:max-w-[700px] opacity-0 animate-[fadeUp_1s_ease-out_forwards]">
             {heroDescription}
