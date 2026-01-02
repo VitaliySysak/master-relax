@@ -35,7 +35,7 @@ export const ChooseMassage: React.FC<Props> = ({ className }) => {
     <div className={cn('pb-4 w-full h-full flex flex-col', className)}>
       <div className="flex items-center gap-2 mb-2">
         <FiMessageSquare color="#d34545" />
-        <h3 className="text-[20px] font-medium">Оберіть масаж</h3>
+        <h3 className="text-[20px] font-medium my-4">Оберіть масаж</h3>
       </div>
 
       <div className="flex-1 min-h-0 overflow-y-auto pb-4">

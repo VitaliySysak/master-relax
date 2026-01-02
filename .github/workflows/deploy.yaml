@@ -11,16 +11,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Log in to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-
       - name: Github hash
         run: echo "GITHUB_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -39,7 +36,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Copy compose.yaml
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -48,7 +44,6 @@ jobs:
           key: ${{ secrets.VPS_KEY }}
           source: "compose.yaml,master-relax-maintenance"
           target: "~/master-relax"
-
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -57,11 +52,7 @@ jobs:
           key: ${{ secrets.VPS_KEY }}
           script: |
             cd master-relax
-
             docker compose down
-
             docker pull bering152/master-relax-app-production:latest
-
             docker compose run --rm master-relax npx prisma@6.11.1 db push
-
             docker compose up -d

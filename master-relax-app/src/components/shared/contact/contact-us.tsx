@@ -58,7 +58,7 @@ export const ContactUs: React.FC<Props> = ({ className }) => {
         >
           <FormProvider {...form}>
             <form
-              className="relative flex flex-col items-center gap-8 2xl:gap-12"
+              className="relative flex flex-col items-center gap-6 2xl:gap-12"
               onSubmit={form.handleSubmit(onSubmit)}
             >
               <h1 className="w-full text-[28px] lg:text-[32px] xl:text-[42px] 2xl:text-[48px] font-semibold font-title text-center">

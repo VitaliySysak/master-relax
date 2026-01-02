@@ -22,7 +22,7 @@ export const FormInput: React.FC<Props> = ({ className, name, ...props }) => {
         <Input
           {...props}
           className={cn(
-            'text-white focus-visible:border-ring text-[18px] lg:text-[20px] 2xl:text-[24px] placeholder:text-input border-b border-b-secondary bg-transparent pb-4 h-8',
+            'text-white focus-visible:border-ring text-[16px] lg:text-[20px] 2xl:text-[24px] placeholder:text-input border-b border-b-secondary bg-transparent pb-4 h-8',
           )}
           {...register(name)}
         />

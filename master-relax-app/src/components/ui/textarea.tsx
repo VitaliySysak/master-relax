@@ -23,7 +23,7 @@ export const Textarea: React.FC<Props> = ({ className, name, ...props }) => {
         {...props}
         data-slot="textarea"
         className={cn(
-          'w-full min-h-[120px] border-secondary placeholder:text-input text-[18px] lg:text-[20px] 2xl:text-[24px] focus-visible:border-ring focus-visible:ring-ring/50  flex field-sizing-content rounded-md border bg-transparent px-3 py-2 shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50',
+          'w-full min-h-[120px] border-secondary placeholder:text-input text-[16px] lg:text-[20px] 2xl:text-[24px] focus-visible:border-ring focus-visible:ring-ring/50  flex field-sizing-content rounded-md border bg-transparent px-3 py-2 shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
         {...register(name)}

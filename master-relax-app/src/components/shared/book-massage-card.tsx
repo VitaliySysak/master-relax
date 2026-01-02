@@ -22,13 +22,13 @@ export const BookMassageCard: React.FC<Props> = ({ className, massage, name, isS
         trigger(name);
       }}
       className={cn(
-        'flex flex-col justify-evenly cursor-pointer h-[120px] md:h-[160px] border-3 border-[#4a4a55] rounded-2xl p-4 md:py-6 transition-all duration-300 hover:border-[#84363a] hover:shadow-lg',
+        'flex flex-col justify-between cursor-pointer h-[160px] border-3 border-[#4a4a55] rounded-2xl px-4 py-4 md:py-6 transition-all duration-300 hover:border-[#84363a] hover:shadow-lg',
         isSelected && 'bg-[#34262e] border-[#d34545] hover:border-[#d34545]',
         className,
       )}
     >
       <div className="flex justify-between">
-        <h3 className="text-white text-[20px] font-bold">{massage.name}</h3>
+        <h3 className="text-white text-[16px] lg:text-[17px] font-bold">{massage.name}</h3>
         <span className="text-[#d34545] font-semibold">₴{massage.price}</span>
       </div>
       <span className="text-[16px] text-[#a6a6a6]">{massage.durationMin} хв</span>

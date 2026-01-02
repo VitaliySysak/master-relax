@@ -10,7 +10,7 @@ export const CardSkeleton: React.FC<Props> = ({ className }) => {
   return (
     <div
       className={cn(
-        'flex flex-col justify-evenly cursor-pointer h-[120px] md:h-[138px] border-3 border-[#4a4a55] rounded-2xl p-4',
+        'flex flex-col justify-evenly cursor-pointer h-[160px] border-3 border-[#4a4a55] rounded-2xl p-4',
         className,
       )}
     >
