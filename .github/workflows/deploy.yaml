@@ -54,7 +54,7 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             set -e
-            export PATH=/home/lockcore/bin:$PATH
+            export PATH=/home/master-relax/bin:$PATH
             export DOCKER_HOST=unix:///run/user/1002/docker.sock
             cd main
             docker compose down
