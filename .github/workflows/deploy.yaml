@@ -53,8 +53,12 @@ jobs:
           key: ${{ secrets.VPS_KEY }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            cd master-relax
+            set -e
+            export PATH=/home/lockcore/bin:$PATH
+            export DOCKER_HOST=unix:///run/user/1002/docker.sock
+            cd main
             docker compose down
-            docker pull bering152/master-relax-app-production:latest
-            docker compose run --rm master-relax npx prisma@6.11.1 db push
+            docker pull ${{ secrets.REGISTRY_USER }}/master-relax-app-production:latest
             docker compose up -d
+            docker compose exec -T backend npx prisma db push --accept-data-loss
+            docker system prune -a -f
