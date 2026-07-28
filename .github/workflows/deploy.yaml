@@ -60,5 +60,5 @@ jobs:
             docker compose down
             docker pull ${{ secrets.REGISTRY_USER }}/master-relax-app-production:latest
             docker compose up -d
-            docker compose exec -T master-relax npx prisma db push --accept-data-loss
+            docker compose run --rm master-relax npx prisma@6.11.1 db push
             docker system prune -a -f
