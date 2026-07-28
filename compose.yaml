@@ -20,6 +20,7 @@ services:
       - 127.0.0.1:3010:8080
   db:
     container_name: master-relax-database
+    restart: unless-stopped
     env_file:
       - ./master-relax-database/.env.production
     volumes:
