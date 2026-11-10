@@ -72,10 +72,14 @@ export const BookModal: React.FC<Props> = ({ className, onClose }) => {
 
       form.reset();
       toast.success('Очікуйте, масажист зв’яжеться з вами найближчим часом');
+      onClose();
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         if (error.response?.data?.code === 'SLOT_ALREADY_RESERVED') {
           toast.error('Цей слот вже зайнятий іншим користувачем', { icon: '⚠️' });
+          form.setValue('time', '');
+          form.setValue('slotId', '');
+          setStep(2);
         } else {
           toast.error('Сталася помилка при відправленні, спробуйте пізніше', {
             icon: '❌',
@@ -86,7 +90,6 @@ export const BookModal: React.FC<Props> = ({ className, onClose }) => {
       }
       console.error('Error in onSubmit:', error);
     } finally {
-      onClose();
       setIsLoading(false);
     }
   };

@@ -1,67 +1,66 @@
 import prisma from '../../../../../prisma/prisma-client';
 import { NextResponse } from 'next/server';
-import axios from 'axios';
 import { bookSlotSchema } from '@/schemas/book-slot-schema';
-
-const { BOT_TOKEN, OWNER1_ID, OWNER2_ID } = process.env;
+import { escapeTelegramHtml, notifyOwners } from '@/lib/telegram';
 
 export async function POST(request: Request) {
   try {
     const json = await request.json();
-    const body = bookSlotSchema.parse(json);
+    const validationResult = bookSlotSchema.safeParse(json);
 
-    const { phone, fullName, duration, massageType, slotId } = body;
-
-    const client = await prisma.client.create({
-      data: {
-        phone,
-        fullName,
-      },
-    });
-
-    const appointmentSlot = await prisma.appointmentSlot.findFirst({ where: { id: slotId, reserved: false } });
-
-    if (!appointmentSlot) {
-      return new Response(
-        JSON.stringify({ message: 'Цей слот вже зайнятий іншим користувачем', code: 'SLOT_ALREADY_RESERVED' }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        },
+    if (!validationResult.success) {
+      return NextResponse.json(
+        { message: 'Невірні дані запису', code: 'VALIDATION_ERROR', errors: validationResult.error.flatten() },
+        { status: 400 },
       );
     }
 
-    const updateAppointmentSlot = await prisma.appointmentSlot.update({
-      where: {
-        id: slotId,
-      },
-      data: { clientId: client.id, reserved: true },
+    const { phone, fullName, duration, massageType, slotId } = validationResult.data;
+
+    const bookedSlot = await prisma.$transaction(async (transaction) => {
+      const reservationResult = await transaction.appointmentSlot.updateMany({
+        where: { id: slotId, reserved: false, time: { gte: new Date() } },
+        data: { reserved: true, massageType },
+      });
+
+      if (reservationResult.count === 0) return null;
+
+      const client = await transaction.client.create({
+        data: {
+          phone,
+          fullName,
+        },
+      });
+
+      return transaction.appointmentSlot.update({
+        where: { id: slotId },
+        data: { clientId: client.id },
+      });
     });
 
-    const clientMessage = `
-      *Користувач записався!*
-      *Ім'я:* ${fullName}
-      *Телефон:* ${phone}
-      *Масаж:* ${massageType}
-      *Тривалість:* ${duration} хв
-      *Час:* ${appointmentSlot.time.toLocaleString()}
-      `;
+    if (!bookedSlot) {
+      return NextResponse.json(
+        { message: 'Цей слот вже зайнятий іншим користувачем', code: 'SLOT_ALREADY_RESERVED' },
+        { status: 400 },
+      );
+    }
 
-    await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      chat_id: OWNER1_ID,
-      text: clientMessage,
-      parse_mode: 'Markdown',
-    });
+    const slotTime = bookedSlot.time.toLocaleString('uk-UA', { timeZone: 'Europe/Kyiv' });
 
-    await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      chat_id: OWNER2_ID,
-      text: clientMessage,
-      parse_mode: 'Markdown',
-    });
+    const clientMessage = [
+      '<b>Користувач записався!</b>',
+      `<b>Ім'я:</b> ${escapeTelegramHtml(fullName)}`,
+      `<b>Телефон:</b> ${escapeTelegramHtml(phone)}`,
+      `<b>Масаж:</b> ${escapeTelegramHtml(massageType)}`,
+      `<b>Тривалість:</b> ${duration} хв`,
+      `<b>Час:</b> ${slotTime}`,
+    ].join('\n');
 
-    return NextResponse.json(updateAppointmentSlot, { status: 201 });
+    await notifyOwners(clientMessage);
+
+    return NextResponse.json(bookedSlot, { status: 201 });
   } catch (error) {
-    console.error('Error while execution route.ts/contact/post:', error);
+    console.error('Error while execution route.ts/book-slot/post:', error);
     return new Response(JSON.stringify('Server Error'), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

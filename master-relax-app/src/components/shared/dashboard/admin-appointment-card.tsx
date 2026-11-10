@@ -36,6 +36,7 @@ export const AdminAppointmentCard: React.FC<Props> = ({ className, slot, onSlotD
           <>
             <span>Ім’я: {slot.client?.fullName}</span>
             <span>Телефон: {slot.client?.phone}</span>
+            {slot.massageType && <span>Масаж: {slot.massageType}</span>}
           </>
         )}
       </div>
